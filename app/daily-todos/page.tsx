@@ -15,7 +15,7 @@ export default async function Page() {
   const tomorrowTodos = await fetchTodosForDate(tomorrow);
 
   return (
-    <div className="p-32 columns-3 mx-auto">
+    <div className="p-32 grid grid-cols-3 gap-4 mx-auto">
       <Day date={yesterday} todos={yesterdayTodos} era='past' />
       <Day date={today} todos={todayTodos} era='present' />
       <Day date={tomorrow} todos={tomorrowTodos} era='future' />

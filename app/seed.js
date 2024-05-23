@@ -21,6 +21,7 @@ async function seedTodos(client) {
   try {
     const createTable = await client.query(/* sql */`
       CREATE TABLE IF NOT EXISTS todos (
+        id UUID PRIMARY KEY,
         task TEXT NOT NULL,
         bullet_style TEXT NOT NULL,
         date_created DATE NOT NULL,
@@ -36,13 +37,13 @@ async function seedTodos(client) {
       todos.map(async (todo) => {
         if (todo.date_complete) {
           return client.query(/* sql */`
-            INSERT INTO todos (task, bullet_style, date_created, date_begin, date_complete)
-            VALUES ('${todo.task}', '${todo.bullet_style}', '${todo.date_created}', '${todo.date_begin}', '${todo.date_complete}');
+            INSERT INTO todos (id, task, bullet_style, date_created, date_begin, date_complete)
+            VALUES ('${todo.id}', '${todo.task}', '${todo.bullet_style}', '${todo.date_created}', '${todo.date_begin}', '${todo.date_complete}');
           `)
         } else {
           return client.query(/* sql */`
-            INSERT INTO todos (task, bullet_style, date_created, date_begin, date_complete)
-            VALUES ('${todo.task}', '${todo.bullet_style}', '${todo.date_created}', '${todo.date_begin}', NULL);
+            INSERT INTO todos (id, task, bullet_style, date_created, date_begin, date_complete)
+            VALUES ('${todo.id}', '${todo.task}', '${todo.bullet_style}', '${todo.date_created}', '${todo.date_begin}', NULL);
           `)
         }
       })

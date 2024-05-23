@@ -1,46 +1,53 @@
+'use client';
+
 import { TodoItem } from "./todoItem";
 import { Todo } from "../types";
 import { formatDate } from "../utils";
-// import styles from './day.css';
-
-// Use regular bullet style unless todo has been forwarded
-const getBulletStyle = (todo: Todo, era: 'past' | 'present' | 'future') => {
-  if (todo.date_complete || era != 'past' ) { 
-    return 'point';
-  } else {
-    return 'arrow';
-  }
-}
+import { DateContext } from "./contexts";
 
 export function Day({date, todos, era}: {date: Date, todos: Todo[], era: 'past' | 'present' | 'future'}) {
   let [ header_color, body_color ] = [ '', '' ]
   switch (era) {
   case 'past':
-    header_color = 'bg-gray-100';
-    body_color = 'bg-gray-200';
+    header_color = 'bg-gray-200';
+    body_color = 'bg-gray-100';
     break;
   case 'present':
-    header_color = 'bg-blue-100';
-    body_color = 'bg-blue-200';
+    header_color = 'bg-blue-200';
+    body_color = 'bg-blue-100';
     break;
   case 'future':
-    header_color = 'bg-gray-50';
-    body_color = 'bg-gray-100';
+    header_color = 'bg-gray-100';
+    body_color = 'bg-gray-50';
     break;
   }
 
   const todoHtml = todos.map((todo) => { 
     return <TodoItem 
+      id={todo.id}
       text={todo.task} 
-      complete={todo.date_complete ? true : false} 
-      bulletStyle={getBulletStyle(todo, era)}
+      date_complete={todo.date_complete} 
+      bulletStyle={todo.bullet_style}
+      key={todo.id}
     /> 
   });
+
   return (
-    <main className="break-inside-avoid-column">
-      <div className={`p-4 text-center ${header_color}`}>{formatDate(date)}</div>
-      <div className={`p-4 ${body_color}`}>
-        {todoHtml}
+    <main>
+      <div className={`p-4 ${header_color} rounded-t`}>
+        <div className="text-sm text-right">'{date.getFullYear().toString().slice(-2)}</div>
+        <div className="text-center">
+          {date.toLocaleString('default', { month: 'long' })}
+          <br />
+          <span className="text-2xl">{date.getDate()}</span>
+          <br />
+          <span className="text-sm">{date.toLocaleString('default', { weekday: 'long' })}</span>
+        </div>
+      </div>
+      <div className={`p-4 ${body_color} rounded-b`}>
+        <DateContext.Provider value={date}>
+          {todoHtml}
+        </DateContext.Provider>
       </div>
     </main>
   );

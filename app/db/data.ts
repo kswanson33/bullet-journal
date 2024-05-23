@@ -19,13 +19,15 @@ export const fetchTodosForDate = async (date: Date) => {
         SELECT * FROM todos 
         WHERE date_begin <= '${date_formatted}'
         AND (date_complete IS NULL 
-            OR '${date_formatted}' <= date_complete);
-        `
+            OR '${date_formatted}' <= date_complete)
+        ORDER BY date_created, task;
+      `
     } else {
       // Query string for future dates
       sql = /* sql */`
         SELECT * FROM todos
-        WHERE date_begin = '${date_formatted}';
+        WHERE date_begin = '${date_formatted}'
+        ORDER BY date_created, task;
       `
     }
     const data = await query<Todo>(sql);
