@@ -46,16 +46,16 @@ export function TodoItem({id, text, date_complete, bulletStyle}: {id: string, te
 }
 
 const bulletIcon = (bulletStyle: BulletStyle) => {
-  let icon = <FaCircle className="self-center h-2 w-2"/>
+  let icon = <FaCircle className="self-center h-2 w-2 min-w-2"/>
   switch (bulletStyle) {
     case 'point':
-      icon = <FaCircle className="self-center h-2 w-2"/>;
+      icon = <FaCircle className="self-center h-2 w-2 min-w-2"/>;
       break;
     case 'arrow':
-      icon = <FaArrowRight className="self-center h-2 w-2" />;
+      icon = <FaArrowRight className="self-center h-2 w-2 min-w-2" />;
       break;
     default:
-      icon = <FaCircle className="self-center h-2 w-2"/>;
+      icon = <FaCircle className="self-center h-2 w-2 min-w-2"/>;
       break;
   }
   return icon;

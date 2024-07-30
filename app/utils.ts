@@ -13,3 +13,7 @@ export const compareDates = (date1: Date, date2: Date): -1 | 0 | 1 => {
     return 1;
   }
 }
+
+export const formatTimestamp = (date: Date): string => {
+  return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+}

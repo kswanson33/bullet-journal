@@ -2,8 +2,8 @@
 
 import { TodoItem } from "./todoItem";
 import { Todo } from "../types";
-import { formatDate } from "../utils";
 import { DateContext } from "./contexts";
+import { CreateInput } from "./createInput";
 
 export function Day({date, todos, era}: {date: Date, todos: Todo[], era: 'past' | 'present' | 'future'}) {
   let [ header_color, body_color ] = [ '', '' ]
@@ -47,6 +47,8 @@ export function Day({date, todos, era}: {date: Date, todos: Todo[], era: 'past' 
       <div className={`p-4 ${body_color} rounded-b`}>
         <DateContext.Provider value={date}>
           {todoHtml}
+          <div className="h-4" />
+          <CreateInput />
         </DateContext.Provider>
       </div>
     </main>
