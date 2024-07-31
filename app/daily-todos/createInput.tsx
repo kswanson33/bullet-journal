@@ -1,5 +1,5 @@
 import { useContext, useRef } from "react";
-import { createTodoOn } from "../db/actions";
+import * as actions from "../db/actions";
 import { DateContext } from "./contexts";
 import { useFormStatus } from "react-dom";
 
@@ -15,7 +15,7 @@ export function CreateInput() {
   const formRef = useRef(0);
   const onSubmit = (formData) => {
     formRef.current.reset();
-    createTodoOn(date, formData);
+    actions.createTodoOn(date, formData);
   }
 
   return (

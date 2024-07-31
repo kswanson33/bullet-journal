@@ -57,3 +57,13 @@ export const createTodoOn = async (date: Date, formData: FormData) => {
   await query(sql);
   revalidatePath('/daily-todos');
 }
+
+export const deleteTodo = async (id: string) => {
+  const sql = `
+    DELETE FROM todos WHERE id='${id}';
+  `
+  console.log(sql);
+  await query(sql);
+
+  revalidatePath('/daily-todos');
+}

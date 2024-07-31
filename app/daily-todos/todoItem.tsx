@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from "react";
-import { FaCircle, FaArrowRight } from "react-icons/fa" // https://react-icons.github.io/react-icons/icons/fa6/
-import { setCompleteOn, setIncomplete } from "../db/actions";
+import { FaCircle, FaArrowRight, FaTrash } from "react-icons/fa" // https://react-icons.github.io/react-icons/icons/fa6/
+import * as actions from "../db/actions";
 import { DateContext, TodayContext } from "./contexts";
 import { useContext } from "react";
 import { formatDate } from "../utils";
 import { BulletStyle } from "../types";
+import './todoItem.css';
 
 export function TodoItem({id, text, date_complete, bulletStyle}: {id: string, text: string, date_complete: string, bulletStyle: BulletStyle}) {
   let complete = date_complete ? true : false;
@@ -27,35 +28,45 @@ export function TodoItem({id, text, date_complete, bulletStyle}: {id: string, te
     setComplete(complete);
   }
 
-  function handleClick() {
+  const updateCompleteness = () => {
     if (complete_state) {
-      setIncomplete(id);
+      actions.setIncomplete(id);
     } else {
-      setCompleteOn(id, formatDate(date));
+      actions.setCompleteOn(id, formatDate(date));
     }
     setComplete(!complete_state);
   }
+
+  const removeTodo = () => {
+    actions.deleteTodo(id);
+  }
   
   return (
-    <div className={`${complete_state ? 'line-through' : ''} text-black hover:text-gray-600 flex`} onClick={handleClick}>
+    <div className="todo-parent flex hover:bg-gray-200">
       { icon }
       <div className="min-w-2" />
-      { text }
+      <div className={`${complete_state ? 'line-through' : ''}`} onClick={updateCompleteness}>
+        { text }
+      </div>
+      <div className="trash-icon ml-auto mr-1 mt-1 h-4 w-4 min-w-4 text-gray-600 hover:text-blue-600 opacity-0" onClick={removeTodo}>
+        <FaTrash />
+      </div>
     </div>
   )
 }
 
 const bulletIcon = (bulletStyle: BulletStyle) => {
-  let icon = <FaCircle className="self-center h-2 w-2 min-w-2"/>
+  const icon_styles = "mt-2 ml-1 h-2 w-2 min-w-2"
+  let icon = <FaCircle className={`${icon_styles}`}/>
   switch (bulletStyle) {
     case 'point':
-      icon = <FaCircle className="self-center h-2 w-2 min-w-2"/>;
+      icon = <FaCircle className={`${icon_styles}`}/>;
       break;
     case 'arrow':
-      icon = <FaArrowRight className="self-center h-2 w-2 min-w-2" />;
+      icon = <FaArrowRight className={`${icon_styles}`} />;
       break;
     default:
-      icon = <FaCircle className="self-center h-2 w-2 min-w-2"/>;
+      icon = <FaCircle className={`${icon_styles}`}/>;
       break;
   }
   return icon;

@@ -6,11 +6,13 @@ import { DateContext } from "./contexts";
 import { CreateInput } from "./createInput";
 
 export function Day({date, todos, era}: {date: Date, todos: Todo[], era: 'past' | 'present' | 'future'}) {
-  let [ header_color, body_color ] = [ '', '' ]
+  let [ header_color, body_color, body_text_color ] = [ '', '', '' ]
+  // Style day based on "era"
   switch (era) {
   case 'past':
     header_color = 'bg-gray-200';
     body_color = 'bg-gray-100';
+    body_text_color = 'text-gray-500';
     break;
   case 'present':
     header_color = 'bg-blue-200';
@@ -19,6 +21,7 @@ export function Day({date, todos, era}: {date: Date, todos: Todo[], era: 'past' 
   case 'future':
     header_color = 'bg-gray-100';
     body_color = 'bg-gray-50';
+    body_text_color = "text-gray-500";
     break;
   }
 
@@ -46,7 +49,7 @@ export function Day({date, todos, era}: {date: Date, todos: Todo[], era: 'past' 
       </div>
       <div className={`p-4 ${body_color} rounded-b`}>
         <DateContext.Provider value={date}>
-          {todoHtml}
+          <div className={`${body_text_color}`}>{todoHtml}</div>
           <div className="h-4" />
           <CreateInput />
         </DateContext.Provider>
