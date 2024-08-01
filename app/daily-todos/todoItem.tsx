@@ -5,7 +5,7 @@ import { FaCircle, FaArrowRight, FaTrash } from "react-icons/fa" // https://reac
 import * as actions from "../db/actions";
 import { DateContext, TodayContext } from "./contexts";
 import { useContext } from "react";
-import { formatDate } from "../utils";
+import { compareDates, formatDate } from "../utils";
 import { BulletStyle } from "../types";
 import './todoItem.css';
 
@@ -14,9 +14,7 @@ export function TodoItem({id, text, date_complete, bulletStyle}: {id: string, te
   let date = useContext(DateContext);
   let today = useContext(TodayContext);
 
-  // Use arrow if todo is incomplete and in the past, or if complete date is later than display date
-  if ((date < today && !date_complete) || (date_complete && new Date(formatDate(date)) < new Date(date_complete))) {
-    // console.log(`${new Date(formatDate(date))} < ${new Date(date_complete)} is ` + (new Date(formatDate(date)) < new Date(date_complete)));
+  if (useArrow(date, today, complete ? new Date(date_complete) : null)) {
     bulletStyle = 'arrow';
   }
   let icon = bulletIcon(bulletStyle);
@@ -55,6 +53,8 @@ export function TodoItem({id, text, date_complete, bulletStyle}: {id: string, te
   )
 }
 
+// Helper fns
+
 const bulletIcon = (bulletStyle: BulletStyle) => {
   const icon_styles = "mt-2 ml-1 h-2 w-2 min-w-2"
   let icon = <FaCircle className={`${icon_styles}`}/>
@@ -70,6 +70,14 @@ const bulletIcon = (bulletStyle: BulletStyle) => {
       break;
   }
   return icon;
+  // TODO: support other icons
 }
 
-// TODO: support other icons
+// Use arrow if todo is incomplete and in the past, or if complete date is later than display date
+const useArrow = (parentDate: Date, currentDate: Date, dateComplete: Date | null) => {
+  if ((!dateComplete && compareDates(parentDate, currentDate) === -1) || 
+      ( dateComplete && compareDates(parentDate, dateComplete) === -1)) {
+    return true;
+  }
+  return false;
+}

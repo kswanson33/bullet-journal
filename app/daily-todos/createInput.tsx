@@ -2,18 +2,24 @@ import { useContext, useRef } from "react";
 import * as actions from "../db/actions";
 import { DateContext } from "./contexts";
 import { useFormStatus } from "react-dom";
+import { FaArrowRight } from "react-icons/fa6";
 
 function Submit() {
   const { pending } = useFormStatus();
   return (
-    <button type="submit" disabled={pending} className={`${pending ? "bg-blue-400" : "bg-blue-500"} text-white rounded-md p-2 min-w-8`}>{pending ? '...' : '->'}</button>
+    <button 
+      type="submit" 
+      disabled={pending} 
+      className={`${pending ? "bg-blue-400" : "bg-blue-500"} text-white rounded-md p-2 min-w-12 flex items-center justify-center`}>
+        {pending ? '...' : <FaArrowRight />}
+    </button>
   )
 }
 
 export function CreateInput() {
   let date = useContext(DateContext);
-  const formRef = useRef(0);
-  const onSubmit = (formData) => {
+  const formRef = useRef(0); // TODO: fix type error
+  const onSubmit = (formData: FormData) => {
     formRef.current.reset();
     actions.createTodoOn(date, formData);
   }
