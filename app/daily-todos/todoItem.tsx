@@ -74,7 +74,7 @@ const bulletIcon = (bulletStyle: BulletStyle) => {
 }
 
 // Use arrow if todo is incomplete and in the past, or if complete date is later than display date
-const useArrow = (parentDate: Date, currentDate: Date, dateComplete: Date | null) => {
+const useArrow = (parentDate: Date, currentDate: Date, dateComplete: Date | null): boolean => {
   if ((!dateComplete && compareDates(parentDate, currentDate) === -1) || 
       ( dateComplete && compareDates(parentDate, dateComplete) === -1)) {
     return true;

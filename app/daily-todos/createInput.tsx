@@ -1,3 +1,5 @@
+'use client';
+
 import { useContext, useRef } from "react";
 import * as actions from "../db/actions";
 import { DateContext } from "./contexts";
