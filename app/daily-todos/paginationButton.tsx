@@ -19,7 +19,7 @@ export const PaginationButton = ({direction}: { direction: 'next' | 'prev'}) => 
     router.push(`/daily-todos/${formatDate(navigateTo)}`);
   }
 
-  const buttonCss = "m-4 p-3 bg-blue-600 rounded max-h-16 text-white flex items-center"
+  const buttonCss = "p-3 bg-blue-600 rounded text-white flex items-center"
   const caret = direction === 'next' ? <FaCaretRight /> : <FaCaretLeft />;
   return (
     <div onClick={navigate} className={`${buttonCss}`}>{caret}</div>
