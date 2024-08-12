@@ -2,7 +2,7 @@
 
 This app is inspired by the [bullet journal](https://bulletjournal.com/) philosophy for task planning. Although using a paper notebook has a romantic appeal, I can't draw straight lines. The web application takes care of the setup for planning daily tasks, allowing the user to focus exclusively on recording and updating them.
 
-![image](https://github.com/user-attachments/assets/1e2bb70a-31cc-4ffb-b38a-81d43e94bdb5)
+![image](https://github.com/user-attachments/assets/026c1661-0212-4237-878a-3bdf186ebb56)
 
 
 ## Coming Soon:
