@@ -20,7 +20,7 @@ function Submit() {
 
 export function CreateInput() {
   let date = useContext(DateContext);
-  const formRef = useRef(0); // TODO: fix type error
+  const formRef = useRef(null); // TODO: fix null error
   const onSubmit = (formData: FormData) => {
     formRef.current.reset();
     actions.createTodoOn(date, formData);
@@ -29,7 +29,8 @@ export function CreateInput() {
   return (
     <form ref={formRef} action={onSubmit}>
       <div className="flex">
-        <textarea 
+        <input
+          type="text"
           placeholder="..."
           className="w-full p-1 mr-1 rounded-md"
           id="task"
