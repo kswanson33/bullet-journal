@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@types/pg": "^8.11.6",
+    "@types/uuid": "^10.0.0",
+    "dexie": "^4.0.8",
+    "dexie-react-hooks": "^1.1.7",
     "dotenv": "^16.4.5",
     "next": "14.2.3",
     "pg": "^8.11.5",
