@@ -12,7 +12,7 @@ const getEra = (someday: Date): 'past' | 'present' | 'future' => {
   return eras[compareDates(now, someday) + 1]; // TODO: fix type error
 }
 
-export function Day({date, todos}: {date: Date, todos: Todo[]}) {
+export function Day({date, todos}: {date: Date, todos: Todo[] | undefined}) {
   let [ header_color, body_color, body_text_color ] = [ '', '', '' ]
   // Style day based on "era"
   const era = getEra(date);
@@ -33,15 +33,18 @@ export function Day({date, todos}: {date: Date, todos: Todo[]}) {
     break;
   }
 
-  const todoHtml = todos.map((todo) => { 
-    return <TodoItem 
-      id={todo.id}
-      text={todo.task} 
-      date_complete={todo.date_complete} 
-      bulletStyle={todo.bullet_style}
-      key={todo.id}
-    /> 
-  });
+  let todoHtml = null;
+  if (todos !== undefined) {
+    todoHtml = todos.map((todo) => {
+      return <TodoItem
+        id={todo.id}
+        text={todo.task}
+        date_complete={todo.date_complete}
+        bulletStyle={todo.bullet_style}
+        key={todo.id}
+      />
+    });
+  }
   const noTodosMessage = <i className="text-gray-400">You have nothing to do today.</i>
 
   return (
@@ -58,7 +61,7 @@ export function Day({date, todos}: {date: Date, todos: Todo[]}) {
       </div>
       <div className={`p-4 ${body_color} rounded-b`}>
         <DateContext.Provider value={date}>
-          <div className={`${body_text_color}`}>{todoHtml.length === 0 ? noTodosMessage : todoHtml}</div>
+          <div className={`${body_text_color}`}>{todoHtml === null || todoHtml.length === 0 ? noTodosMessage : todoHtml}</div>
           <div className="h-4" />
           <CreateInput />
         </DateContext.Provider>

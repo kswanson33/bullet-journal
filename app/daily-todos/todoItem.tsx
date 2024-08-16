@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { FaCircle, FaArrowRight, FaTrash } from "react-icons/fa" // https://react-icons.github.io/react-icons/icons/fa6/
-import * as actions from "../db/actions";
+import * as actions from "../dexie/actions";
 import { DateContext, TodayContext } from "./contexts";
 import { useContext } from "react";
 import { compareDates, formatDate } from "../utils";
@@ -21,7 +21,7 @@ export function TodoItem({id, text, date_complete, bulletStyle}: {id: string, te
 
   // Display and update complete status
   const [complete_state, setComplete] = useState(complete);
-  if (complete_state !== complete) { 
+  if (complete_state !== complete) {
     // if completed status is updated thru a different day's todo, this must keep parity
     setComplete(complete);
   }
@@ -29,16 +29,19 @@ export function TodoItem({id, text, date_complete, bulletStyle}: {id: string, te
   const updateCompleteness = () => {
     if (complete_state) {
       actions.setIncomplete(id);
+      location.reload();
     } else {
       actions.setCompleteOn(id, formatDate(date));
+      location.reload();
     }
     setComplete(!complete_state);
   }
 
   const removeTodo = () => {
     actions.deleteTodo(id);
+    location.reload();
   }
-  
+
   return (
     <div className="todo-parent flex hover:bg-gray-200">
       { icon }
@@ -75,7 +78,7 @@ const bulletIcon = (bulletStyle: BulletStyle) => {
 
 // Use arrow if todo is incomplete and in the past, or if complete date is later than display date
 const useArrow = (parentDate: Date, currentDate: Date, dateComplete: Date | null): boolean => {
-  if ((!dateComplete && compareDates(parentDate, currentDate) === -1) || 
+  if ((!dateComplete && compareDates(parentDate, currentDate) === -1) ||
       ( dateComplete && compareDates(parentDate, dateComplete) === -1)) {
     return true;
   }

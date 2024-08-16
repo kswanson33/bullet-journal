@@ -1,6 +1,9 @@
+'use client';
+
 import { Day } from "./day";
-import * as data from "../db/data";
-import { compareDates, getDayAfter, getDayBefore } from "../utils";
+import * as data from "../dexie/data";
+import { getDayAfter, getDayBefore } from "../utils";
+import { useLiveQuery } from "dexie-react-hooks";
 
 const getDisplayDates = (middle: Date) => {
   const first = getDayBefore(middle);
@@ -9,13 +12,13 @@ const getDisplayDates = (middle: Date) => {
   return [first, middle, third];
 }
 
-export const DateGrid = async ({date}: {date: Date}) => {
+export const DateGrid = ({date}: {date: Date}) => {
   const [first, second, third] = getDisplayDates(date);
 
   // Get todos for dates displayed
-  const firstTodos = await data.fetchTodosForDate(first);
-  const secondTodos = await data.fetchTodosForDate(second);
-  const thirdTodos = await data.fetchTodosForDate(third);
+  const firstTodos = useLiveQuery(() => data.fetchTodosForDate(first));
+  const secondTodos =  useLiveQuery(() => data.fetchTodosForDate(second));
+  const thirdTodos = useLiveQuery(() => data.fetchTodosForDate(third));
 
   return (
     <div className="grid grid-cols-3 gap-4 mx-auto">
