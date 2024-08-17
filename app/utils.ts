@@ -1,3 +1,5 @@
+import { Era } from "./types";
+
 export const formatDate = (date: Date): string => {
   return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
 }
@@ -30,4 +32,19 @@ export const dateStringToDate = (date: string) => {
   // Expect YYYY-MM-DD
   const ymd = date.split('-').map(Number);
   return new Date(ymd[0], ymd[1]-1, ymd[2]);
+}
+
+export const getEra = (someday: Date): Era => {
+  const now = new Date();
+  const eras: Era[] = ['past', 'present', 'future']
+  return eras[compareDates(someday, now) + 1];
+}
+
+// Use arrow if todo is incomplete and in the past, or if complete date is later than display date
+export const useArrow = (parentDate: Date, currentDate: Date, dateComplete: Date | null): boolean => {
+  if ((!dateComplete && compareDates(parentDate, currentDate) === -1) ||
+      ( dateComplete && compareDates(parentDate, dateComplete) === -1)) {
+    return true;
+  }
+  return false;
 }

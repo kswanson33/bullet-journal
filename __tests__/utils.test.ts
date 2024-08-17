@@ -54,3 +54,30 @@ describe('dateStringToDate', () => {
     ).toBe("Thu Aug 01 2024 00:00:00 GMT-0400 (Eastern Daylight Time)");
   });
 });
+
+describe('getEra', () => {
+  it('figures out if the given date is the past, present, or future', () => {
+    const date = new Date('May 01, 2024 03:24:00');
+    jest.useFakeTimers().setSystemTime(date);
+    expect(utils.getEra(new Date('May 02, 2024'))).toBe('future');
+    expect(utils.getEra(new Date('August 06, 2023'))).toBe('past');
+    expect(utils.getEra(new Date('May 01, 2024 12:15:00'))).toBe('present');
+  });
+});
+
+describe('useArrow', () => {
+  it('returns true for todos in the past with later/null complete dates', () => {
+    const currentDate = new Date('May 01, 2024');
+    const parentDate = new Date('April 24, 2024');
+    const dateComplete = new Date('April 30, 2024');
+    expect(utils.useArrow(parentDate, currentDate, null)).toBe(true);
+    expect(utils.useArrow(parentDate, currentDate, dateComplete)).toBe(true);
+  });
+  it('returns false otherwise', () => {
+    const currentDate = new Date('May 01, 2024');
+    const parentDate = new Date('April 24, 2024');
+    const dateComplete = new Date('April 24, 2024');
+    expect(utils.useArrow(parentDate, parentDate, null)).toBe(false);
+    expect(utils.useArrow(parentDate, currentDate, dateComplete)).toBe(false);
+  })
+});

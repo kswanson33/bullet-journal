@@ -4,49 +4,32 @@ import { TodoItem } from "./todoItem";
 import { Todo } from "../types";
 import { DateContext } from "./contexts";
 import { CreateInput } from "./createInput";
-import { compareDates } from "../utils";
+import { stylesByEra } from "./cosmetic";
+import { getEra } from "../utils";
 
-const getEra = (someday: Date): 'past' | 'present' | 'future' => {
-  const now = new Date();
-  const eras = ['past', 'present', 'future'];
-  return eras[compareDates(now, someday) + 1]; // TODO: fix type error
-}
-
-export function Day({date, todos}: {date: Date, todos: Todo[]}) {
-  let [ header_color, body_color, body_text_color ] = [ '', '', '' ]
+export function Day(
+  {date, todos}:
+  {date: Date, todos: Todo[]}
+) {
   // Style day based on "era"
   const era = getEra(date);
-  switch (era) {
-  case 'past':
-    header_color = 'bg-gray-200';
-    body_color = 'bg-gray-100';
-    body_text_color = 'text-gray-500';
-    break;
-  case 'present':
-    header_color = 'bg-blue-200';
-    body_color = 'bg-blue-100';
-    break;
-  case 'future':
-    header_color = 'bg-gray-100';
-    body_color = 'bg-gray-50';
-    body_text_color = "text-gray-500";
-    break;
-  }
+  const styles = stylesByEra(era);
 
-  const todoHtml = todos.map((todo) => { 
-    return <TodoItem 
+  const todoHtml = todos.map((todo) => {
+    return <TodoItem
       id={todo.id}
-      text={todo.task} 
-      date_complete={todo.date_complete} 
+      text={todo.task}
+      date_complete={todo.date_complete}
       bulletStyle={todo.bullet_style}
       key={todo.id}
-    /> 
+      styles={styles}
+    />
   });
-  const noTodosMessage = <i className="text-gray-400">You have nothing to do today.</i>
+  const noTodosMessage = <i className={`${styles.text_color} opacity-50`}>You have nothing to do today.</i>
 
   return (
     <main>
-      <div className={`p-4 ${header_color} rounded-t`}>
+      <div className={`p-4 ${styles.header_color} rounded-t ${styles.text_color}`}>
         <div className="text-sm text-right">'{date.getFullYear().toString().slice(-2)}</div>
         <div className="text-center">
           {date.toLocaleString('default', { month: 'long' })}
@@ -56,9 +39,9 @@ export function Day({date, todos}: {date: Date, todos: Todo[]}) {
           <span className="text-sm">{date.toLocaleString('default', { weekday: 'long' })}</span>
         </div>
       </div>
-      <div className={`p-4 ${body_color} rounded-b`}>
+      <div className={`p-4 ${styles.body_color} rounded-b`}>
         <DateContext.Provider value={date}>
-          <div className={`${body_text_color}`}>{todoHtml.length === 0 ? noTodosMessage : todoHtml}</div>
+          <div className={`${styles.text_color}`}>{todoHtml.length === 0 ? noTodosMessage : todoHtml}</div>
           <div className="h-4" />
           <CreateInput />
         </DateContext.Provider>
