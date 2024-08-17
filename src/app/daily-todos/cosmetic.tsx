@@ -1,4 +1,4 @@
-import { Era, BulletStyle } from "../types";
+import { Era, BulletStyle } from "../../types";
 import { FaCircle, FaArrowRight } from "react-icons/fa"; // https://react-icons.github.io/react-icons/icons/fa6/
 
 export const stylesByEra = (era: Era) => {

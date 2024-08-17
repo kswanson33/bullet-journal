@@ -1,3 +1,5 @@
+'use server';
+
 import { query } from "./index";
 import { Todo } from "../types";
 import { compareDates, formatDate } from "../utils";

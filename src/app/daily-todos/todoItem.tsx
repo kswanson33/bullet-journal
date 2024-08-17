@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from "react";
-import * as actions from "../db/actions";
+import * as actions from "../../db/actions";
 import { DateContext, TodayContext } from "./contexts";
 import { useContext } from "react";
-import { useArrow, formatDate } from "../utils";
-import { BulletStyle } from "../types";
+import { useArrow, formatDate } from "../../utils";
+import { BulletStyle } from "../../types";
 import './todoItem.css';
 import { FaTrash } from "react-icons/fa";
 import { bulletIcon } from './cosmetic';

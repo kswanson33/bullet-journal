@@ -1,6 +1,6 @@
 import { DateGrid } from "../dateGrid";
 import { PaginationButton } from "../paginationButton";
-import { dateStringToDate } from "@/app/utils";
+import { dateStringToDate } from "@/src/utils";
 import { TodayButton } from "../todayButton";
 
 export default async function Page({params}: {params: {date: string}}) {

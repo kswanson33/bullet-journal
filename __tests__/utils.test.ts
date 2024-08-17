@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom'
-import * as utils from '../app/utils';
+import * as utils from '../src/utils';
 
 describe('formatDate', () => {
   it('turns a date object into a YYYY-MM-DD string', () => {

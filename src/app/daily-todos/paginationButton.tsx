@@ -2,7 +2,7 @@
 
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 import { usePathname, useRouter } from "next/navigation";
-import { dateStringToDate, getDayAfter, getDayBefore, formatDate, compareDates } from "../utils";
+import { dateStringToDate, getDayAfter, getDayBefore, formatDate, compareDates } from "../../utils";
 
 export const PaginationButton = ({direction}: { direction: 'next' | 'prev'}) => {
   const router = useRouter();
@@ -11,7 +11,7 @@ export const PaginationButton = ({direction}: { direction: 'next' | 'prev'}) => 
   let date = new Date();
   if (pathArray.length > 2) {
     date = dateStringToDate(pathArray[2]);
-  } 
+  }
   const navigateTo = direction === 'next' ? getDayAfter(date) : getDayBefore(date);
   // If navigating to today's date, use the default page
   const urlString = compareDates(navigateTo, new Date()) === 0 ? '' : formatDate(navigateTo);

@@ -1,11 +1,11 @@
 'use client';
 
 import { TodoItem } from "./todoItem";
-import { Todo } from "../types";
+import { Todo } from "../../types";
 import { DateContext } from "./contexts";
 import { CreateInput } from "./createInput";
 import { stylesByEra } from "./cosmetic";
-import { getEra } from "../utils";
+import { getEra } from "../../utils";
 
 export function Day(
   {date, todos}:

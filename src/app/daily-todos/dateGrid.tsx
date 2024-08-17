@@ -1,6 +1,6 @@
 import { Day } from "./day";
-import * as data from "../db/data";
-import { compareDates, getDayAfter, getDayBefore } from "../utils";
+import * as data from "../../db/data";
+import { compareDates, getDayAfter, getDayBefore } from "../../utils";
 
 const getDisplayDates = (middle: Date) => {
   const first = getDayBefore(middle);
