@@ -13,17 +13,16 @@ function Submit() {
       type="submit"
       disabled={pending}
       className={`${pending ? "bg-blue-400" : "bg-blue-500"} text-white rounded-md p-2 min-w-12 flex items-center justify-center`}>
-        {pending ? '...' : <FaArrowRight />}
+      {pending ? '...' : <FaArrowRight />}
     </button>
   )
 }
 
-export function CreateInput() {
-  let date = useContext(DateContext);
+export function CreateInput({ date }: { date: Date }) {
   const formRef = useRef(null); // TODO: fix null error
   const onSubmit = (formData: FormData) => {
     formRef.current.reset();
-    actions.createTodoOn(date, formData);
+    actions.createTodoBeginningOn(date, formData);
   }
 
   return (

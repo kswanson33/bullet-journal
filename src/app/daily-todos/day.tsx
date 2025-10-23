@@ -1,16 +1,15 @@
-'use client';
+'use server';
 
 import { TodoItem } from "./todoItem";
 import { Todo } from "../../types";
-import { DateContext } from "./contexts";
 import { CreateInput } from "./createInput";
 import { stylesByEra } from "./cosmetic";
 import { getEra } from "../../utils";
 
-export function Day(
-  {date, todos}:
-  {date: Date, todos: Todo[]}
-) {
+export const Day = async (
+  { date, todos }:
+    { date: Date, todos: Todo[] }
+) => {
   // Style day based on "era"
   const era = getEra(date);
   const styles = stylesByEra(era);
@@ -19,6 +18,7 @@ export function Day(
     return <TodoItem
       id={todo.id}
       text={todo.task}
+      parent_date={date}
       date_complete={todo.date_complete}
       bulletStyle={todo.bullet_style}
       key={todo.id}
@@ -40,11 +40,9 @@ export function Day(
         </div>
       </div>
       <div className={`p-4 ${styles.body_color} rounded-b`}>
-        <DateContext.Provider value={date}>
-          <div className={`${styles.text_color}`}>{todoHtml.length === 0 ? noTodosMessage : todoHtml}</div>
-          <div className="h-4" />
-          <CreateInput />
-        </DateContext.Provider>
+        <div className={`${styles.text_color}`}>{todoHtml.length === 0 ? noTodosMessage : todoHtml}</div>
+        <div className="h-4" />
+        <CreateInput date={date} />
       </div>
     </main>
   );
