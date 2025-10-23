@@ -2,10 +2,13 @@ import { DateGrid } from "../dateGrid";
 import { PaginationButton } from "../paginationButton";
 import { dateStringToDate } from "@/src/utils";
 import { TodayButton } from "../todayButton";
+import { instantiateTodosTable } from "@/src/db/actions";
 
-export default async function Page({params}: {params: {date: string}}) {
+export default async function Page({ params }: { params: { date: string } }) {
   // On initial page load, display the current date
   const day: Date = params.date !== undefined ? dateStringToDate(params.date[0]) : new Date();
+
+  await instantiateTodosTable();
 
   return (
     <div className="p-32">

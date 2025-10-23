@@ -14,6 +14,21 @@ const TodoFormSchema = z.object({
 
 const CreateTodo = TodoFormSchema.omit({ id: true, bullet_style: true }); // TODO: get bullet style from form
 
+export const instantiateTodosTable = async () => {
+  const sql = `
+    CREATE TABLE IF NOT EXISTS todos (
+      id TEXT PRIMARY KEY,
+      task TEXT NOT NULL,
+      bullet_style TEXT,
+      date_created TIMESTAMP NOT NULL,
+      date_begin TIMESTAMP,
+      date_complete TIMESTAMP
+    );
+  `
+  await query(sql);
+  revalidatePath('/daily-todos');
+}
+
 export const setCompleteOn = async (id: string, date: string) => {
   const sql = `
     UPDATE todos
@@ -36,7 +51,7 @@ export const setIncomplete = async (id: string) => {
   revalidatePath('/daily-todos');
 }
 
-export const createTodoOn = async (date: Date, formData: FormData) => {
+export const createTodoBeginningOn = async (date: Date, formData: FormData) => {
   const { task } = CreateTodo.parse({
     task: formData.get('task')
   });
@@ -50,7 +65,7 @@ export const createTodoOn = async (date: Date, formData: FormData) => {
   console.log(date);
   console.log(formData);
   const sql = `
-    INSERT INTO todos 
+    INSERT INTO todos
     VALUES ('${randomUUID()}', '${taskSingleQuotes}', 'box', '${formatTimestamp(new Date())}', '${formatDate(date)}', NULL);
   `
   console.log(sql);

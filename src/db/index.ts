@@ -1,15 +1,17 @@
 import { Pool, QueryResultRow } from 'pg';
 
 const {
-  POSTGRES_HOST,
-  POSTGRES_DB,
-  POSTGRES_USER,
+  DB_HOST,
+  DB_NAME,
+  DB_USER,
+  DB_PASSWORD,
 } = process.env
 
 const pool = new Pool({
-  host: POSTGRES_HOST,
-  database: POSTGRES_DB,
-  user: POSTGRES_USER
+  host: DB_HOST,
+  database: DB_NAME,
+  user: DB_USER,
+  password: DB_PASSWORD,
 });
 
 export const query = <Result extends QueryResultRow>(text: string) => {
