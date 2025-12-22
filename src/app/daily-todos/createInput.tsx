@@ -28,10 +28,9 @@ function Submit() {
  * @param date Corresponds to the Day the form is embedded in.
  */
 export function CreateInput({ date }: { date: Date }) {
-  const formRef = useRef(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const onSubmit = (formData: FormData) => {
-    const formCurrent = ensureValue(formRef.current)
-    formCurrent.reset();
+    (ensureValue(formRef.current)).reset()
     actions.createTodoBeginningOn(date, formData);
   }
 
