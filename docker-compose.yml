@@ -1,4 +1,5 @@
 services:
+  # The Next.js app.
   bullet-journal:
     build:
       context: .
@@ -11,23 +12,45 @@ services:
       - ./:/code
       - node_modules:/code/node_modules
     environment:
+      # Use DB authentication values provided by postgres service.
       - DB_USER=bujo
-      - DB_PASSWORD="bujopass"
+      - DB_PASSWORD=bujopass
       - DB_NAME=bujo_dev
       - DB_HOST=postgres
+  # The associated database. Using PostgreSQL.
   postgres:
     image: postgres:16
+    # Persistent data is stored as a volume. See `volumes` list below.
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
       - bullet-journal-network
+    # Set authentication for db. App and dbgate use these values.
     environment:
       - POSTGRES_USER=bujo
-      - POSTGRES_PASSWORD="bujopass"
+      - POSTGRES_PASSWORD=bujopass
       - POSTGRES_DB=bujo_dev
       - POSTGRES_HOST=postgres
     ports:
       - "5432:5432"
+  # Navigate to port 3004 in the browser to use dbgate.
+  # This provides a visualization of everything going on in the Postgres service.
+  dbgate:
+    image: dbgate/dbgate
+    networks:
+      - bullet-journal-network
+    ports:
+      - "3004:3000"
+    environment:
+      CONNECTIONS: bujo
+      # Connection/auth values for the "bujo" connection
+      LABEL_bujo: Postgres
+      SERVER_bujo: postgres
+      USER_bujo: bujo
+      PASSWORD_bujo: bujopass
+      PORT_bujo: 5432
+      DATABASE_bujo: bujo_dev
+      ENGINE_bujo: postgres@dbgate-plugin-postgres
 volumes:
   pgdata:
   node_modules:
