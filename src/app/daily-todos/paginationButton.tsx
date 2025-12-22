@@ -4,7 +4,11 @@ import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 import { usePathname, useRouter } from "next/navigation";
 import { dateStringToDate, getDayAfter, getDayBefore, formatDate, compareDates } from "../../utils";
 
-export const PaginationButton = ({direction}: { direction: 'next' | 'prev'}) => {
+/**
+ * Centers the DateGrid around the next or previous day
+ * @param direction next or prev
+ */
+export const PaginationButton = ({ direction }: { direction: 'next' | 'prev' }) => {
   const router = useRouter();
   const pathArray = usePathname().split('/');
 

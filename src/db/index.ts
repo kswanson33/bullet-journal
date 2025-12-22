@@ -1,5 +1,7 @@
 import { Pool, QueryResultRow } from 'pg';
 
+// Configure DB connection
+
 const {
   DB_HOST,
   DB_NAME,

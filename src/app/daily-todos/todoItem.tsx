@@ -10,6 +10,14 @@ import './todoItem.css';
 import { FaTrash } from "react-icons/fa";
 import { bulletIcon } from './cosmetic';
 
+/**
+ * Todo element.
+ * Each individual todo item has the following attributes:
+ *  - Todo contents
+ *  - Completion status
+ *  - Icon SVG (inferred from completion status, Day it's displayed on, and Era (past/present/future) of the Day)
+ *  - Delete button
+ */
 export function TodoItem(
   { id, text, parent_date, date_complete, bulletStyle, styles }:
     { id: string, text: string, parent_date: Date, date_complete: string | null, bulletStyle: BulletStyle, styles: any }

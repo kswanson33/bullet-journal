@@ -4,6 +4,14 @@ import { query } from "./index";
 import { Todo } from "../types";
 import { compareDates, formatDate } from "../utils";
 
+/**
+ * Retrieves all todos that should be displayed on a given Day.
+ * This includes:
+ * - todos created on that Day
+ * - todos created on previous Days that are still incomplete
+ * - todos created on this or previous Days that have been completed this Day
+ * @param date Date to retrieve todos for
+ */
 export const fetchTodosForDate = async (date: Date) => {
   try {
     // Todos should display on a given day if:
@@ -15,12 +23,12 @@ export const fetchTodosForDate = async (date: Date) => {
     const now = new Date();
     const date_formatted = formatDate(date);
     let sql = '';
-    if (compareDates(date, now) < 1) { 
+    if (compareDates(date, now) < 1) {
       // Query string for past or present dates
       sql = /* sql */`
-        SELECT * FROM todos 
+        SELECT * FROM todos
         WHERE date_begin <= '${date_formatted}'
-        AND (date_complete IS NULL 
+        AND (date_complete IS NULL
             OR '${date_formatted}' <= date_complete)
         ORDER BY date_complete DESC, date_created;
       `

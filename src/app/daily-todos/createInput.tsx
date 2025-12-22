@@ -1,11 +1,13 @@
 'use client';
 
-import { useContext, useRef } from "react";
+import { useRef } from "react";
 import * as actions from "../../db/actions";
-import { DateContext } from "./contexts";
 import { useFormStatus } from "react-dom";
 import { FaArrowRight } from "react-icons/fa6";
 
+/**
+ * Function to run on submit for Create Todo form.
+ */
 function Submit() {
   const { pending } = useFormStatus();
   return (
@@ -18,6 +20,12 @@ function Submit() {
   )
 }
 
+/**
+ * Form for creating a new Todo. Found at the bottom of any Day.
+ * Will create a todo that begins on that day; past, present, or future.
+ * The date_created will be the current time.
+ * @param date Corresponds to the Day the form is embedded in.
+ */
 export function CreateInput({ date }: { date: Date }) {
   const formRef = useRef(null); // TODO: fix null error
   const onSubmit = (formData: FormData) => {

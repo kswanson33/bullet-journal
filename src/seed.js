@@ -14,6 +14,8 @@ const pool = new Pool({
   user: POSTGRES_USER
 });
 
+// Script to pre-populate todos. Not really in use.
+
 // seed.js
 const { todos } = require('./placeholder-data.js');
 

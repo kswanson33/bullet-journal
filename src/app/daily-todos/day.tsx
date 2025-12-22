@@ -6,6 +6,11 @@ import { CreateInput } from "./createInput";
 import { stylesByEra } from "./cosmetic";
 import { getEra } from "../../utils";
 
+/**
+ * Contains all the information for a given day's todos, and the form to create new ones.
+ * @param date The date displayed
+ * @param todos The todos to display on this date
+ */
 export const Day = async (
   { date, todos }:
     { date: Date, todos: Todo[] }
