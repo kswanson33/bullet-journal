@@ -1,6 +1,6 @@
 import { Day } from "./day";
 import * as data from "../../db/data";
-import { compareDates, getDayAfter, getDayBefore } from "../../utils";
+import { getDayAfter, getDayBefore } from "../../utils";
 
 const getDisplayDates = (middle: Date) => {
   const first = getDayBefore(middle);
@@ -9,7 +9,7 @@ const getDisplayDates = (middle: Date) => {
   return [first, middle, third];
 }
 
-export const DateGrid = async ({date}: {date: Date}) => {
+export const DateGrid = async ({ date }: { date: Date }) => {
   const [first, second, third] = getDisplayDates(date);
 
   // Get todos for dates displayed
