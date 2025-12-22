@@ -98,3 +98,10 @@ export const useArrow = (parentDate: Date, currentDate: Date, dateComplete: Date
   }
   return false;
 }
+
+export const ensureValue = <T>(value: T | null | undefined): T => {
+  if (value === null || value === undefined) {
+    throw new Error("Null or undefined value")
+  }
+  return value
+}

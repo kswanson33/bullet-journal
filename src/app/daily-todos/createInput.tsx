@@ -4,6 +4,7 @@ import { useRef } from "react";
 import * as actions from "../../db/actions";
 import { useFormStatus } from "react-dom";
 import { FaArrowRight } from "react-icons/fa6";
+import { ensureValue } from "@/src/utils";
 
 /**
  * Function to run on submit for Create Todo form.
@@ -27,9 +28,10 @@ function Submit() {
  * @param date Corresponds to the Day the form is embedded in.
  */
 export function CreateInput({ date }: { date: Date }) {
-  const formRef = useRef(null); // TODO: fix null error
+  const formRef = useRef(null);
   const onSubmit = (formData: FormData) => {
-    formRef.current.reset();
+    const formCurrent = ensureValue(formRef.current)
+    formCurrent.reset();
     actions.createTodoBeginningOn(date, formData);
   }
 
