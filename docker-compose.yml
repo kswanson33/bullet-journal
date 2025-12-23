@@ -17,6 +17,7 @@ services:
       - POSTGRES_PASSWORD=bujopass
       - POSTGRES_DATABASE=bujo_dev
       - POSTGRES_HOST=postgres
+      - MAINTENANCE_MODE=false
   # The associated database. Using PostgreSQL.
   postgres:
     image: postgres:16
@@ -29,7 +30,7 @@ services:
     environment:
       - POSTGRES_USER=bujo
       - POSTGRES_PASSWORD=bujopass
-      - POSTGRES_DATABASE=bujo_dev
+      - POSTGRES_DB=bujo_dev
       - POSTGRES_HOST=postgres
     ports:
       - "5432:5432"
